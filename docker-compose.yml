@@ -1,14 +1,25 @@
 version: '2'
-
 services:
   couchdb:
-    image: klaemo/couchdb:2.0.0
-    # build: ./
-    container_name: push_db
+    container_name: push-couchdb
+    build: ./docker/
+    volumes:
+      - ./couchdb_data:/usr/local/var/lib/couchdb/
     ports:
       - "5984:5984"
-    volumes:
-      - ./couchdb_data:/opt/couchdb/data
-    environment:
-      - COUCHDB_USER=admin
-      - COUCHDB_PASSWORD=root
+    networks:
+      dbs:
+        aliases:
+          - couchdb
+
+  couchdb-lucene:
+    container_name: push-couchdb-lucene
+    image: klaemo/couchdb-lucene:latest
+    networks:
+      dbs:
+        aliases:
+          - couchdb-lucene
+
+networks:
+  dbs:
+    driver: bridge

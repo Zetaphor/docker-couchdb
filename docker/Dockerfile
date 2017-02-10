@@ -1,0 +1,7 @@
+FROM couchdb:1.6.1
+
+MAINTAINER Clemens Stolle klaemo@apache.org
+
+COPY lucene-proxy.ini /usr/local/etc/couchdb/local.d/
+
+COPY local.ini /usr/local/etc/couchdb/
